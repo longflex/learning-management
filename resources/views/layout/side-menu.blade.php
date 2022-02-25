@@ -84,31 +84,34 @@
                                 </div>
                                 <div class="grid grid-cols-12 gap-6 mt-5">
                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                                        <div class="box p-5">
+                                        <div class="box p-5 bg-primary">
                                             <div class="p-5">
-                                                <div class="text-base font-medium truncate">Device Login Information</div>
-                                                <div class="text-slate-500 mt-1">Today : <span id="time"></span></div>
-                                                <div class="text-slate-500 text-justify mt-1">Your Login IP : {{$user_ip}}</div>
-                                                <div class="text-slate-500 text-justify mt-1">Logged in via DESKTOP</div>
+                                                <div class="flex items-center">
+                                                    <i data-feather="log-in" class="block text-primary w-5 h-5 " style="color:yellow;"></i>
+                                                    <div class="text-base font-medium ml-3 truncate">Device Login Information</div>
+                                                </div>
+                                                <div class="text-slate-300 mt-1 ml-8">Today : <span id="time"></span></div>
+                                                <div class="text-slate-300 text-justify mt-1 ml-8">Your Login IP : {{$user_ip}}</div>
+                                                <div class="text-slate-300 text-justify mt-1 ml-8">Logged in via DESKTOP</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                                        <div class="box p-3">
+                                        <div class="box p-3 bg-primary" >
                                                 <div class="grid grid-cols-12 gap-6">
                                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                                                        <div class="box p-10 text-center ">
+                                                        <div class="box p-10 text-center shadow-lg bg-primary">
                                                                 <span class="text-base font-medium truncate">Current Stage</span>
                                                                 <div class="font-medium  mt-5  text-center">
-                                                                    <button type="button" class="btn btn-secondary py-1 px-2">Stage Name</button>
+                                                                    <button type="button" class="btn  btn-outline-success py-1 px-2">Stage Name</button>
                                                                 </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                                                        <div class="box p-10 text-center">
+                                                        <div class="box p-10 text-center bg-primary shadow-lg ">
                                                                 <span class="text-base font-medium truncate">Current Level</span>
                                                                 <div class="font-medium  mt-5 text-center">
-                                                                    <button type="button" class="btn btn-secondary py-1 px-2">Stage Level</button>
+                                                                    <button type="button" class="btn btn-outline-success py-1 px-2">Stage Level</button>
                                                                 </div>
                                                         </div>
                                                     </div>
@@ -117,7 +120,9 @@
                                     </div>
                                 </div>
                                 <div class="col-span-12 lg:col-span-12 mt-8">
-                                    <div class=" mb-10">Welcome Username to sitename
+                                <i data-feather="award" style="color:green;" class="block text-primary w-5 h-5 "></i>
+
+                                    <div class="ml-3 mb-10">Welcome Username to sitename
                                         <br>Good afternoon, you already success, keep on acticating money...
                                     </div>
                                 </div>

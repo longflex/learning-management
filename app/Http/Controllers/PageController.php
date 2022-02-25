@@ -693,7 +693,6 @@ class PageController extends Controller
     {
         $validatedData = $request->validate([
             'photo' => 'image|mimes:jpg,png,jpeg,gif|max:2048',
-            'phone' => 'required|numeric|max:20|min:7',
             'address' => 'required|max:150|min:10',
         ]);
 
@@ -706,18 +705,17 @@ class PageController extends Controller
             $user->photo = $hname;
         } 
         
-        $user->phone = $request->phone;
         $user->address = $request->address;
         $user->country = $request["country"];
         $user->save();
         //error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n -b-".$hname."-c-".$name."-d-".$path." \n", 3, "c:/my-errors.log");
         
-        return redirect('update-profile-page')->with('status', 'successfully updated');
+        return redirect()->back()->with('status', 'successfully updated');
     }
     public function updateProfile_store_personal(Request $request)
     {
         $validatedData = $request->validate([
-            'crypto' => 'required|max:45|min:45',
+            'crypto' => 'required|max:50|min:45',
             'phone' => 'required|numeric|max:20|min:7',
             'bank' => 'required|max:50|min:12',
         ]);
@@ -730,7 +728,7 @@ class PageController extends Controller
         $user->crypto = $request["crypto"];
         $user->save();
         
-        return redirect('update-profile-page')->with('status1', 'successfully updated');
+        return redirect()->back()->with('status1', 'successfully updated');
     }
     public function help()
     {
@@ -783,6 +781,35 @@ class PageController extends Controller
      */
     public function changePassword()
     {
+        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".Hash::make('1')." \n", 3, "c:/my-errors.log");
+
         return view('pages-pro/change-password',['layout'=>'side-menu-private']);
+    }
+    
+    
+    public function changePasswordStore(Request $request)
+    {
+        
+        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not matches with the password.");
+        }
+    
+        if(strcmp($request->get('current_password'), $request->get('password')) == 0){
+            // Current password and new password same
+            return redirect()->back()->with("error","New Password cannot be same as your current password.");
+        }
+    
+        $validatedData = $request->validate([
+            'current_password' => 'required',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+    
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
+    
+        return redirect()->back()->with("success","Password successfully changed!"); 
     }
 }

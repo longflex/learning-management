@@ -28,6 +28,9 @@ Route::middleware('loggedin')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
+    Route::get('update-profile-page', [PageController::class, 'updateProfile'])->name('update-profile');
+    Route::post('updateProfile/store/displayinfo', [PageController::class, 'updateProfile_store_displayinfo'])->name('update-profile.store.displayinfo');
+    Route::post('updateProfile/store/personal', [PageController::class, 'updateProfile_store_personal'])->name('update-profile.store.personal');
     Route::get('notification-page', [PageController::class, 'notification'])->name('notification');
     Route::get('groups', [PageController::class, 'groups'])->name('groups');
     Route::get('courses', [PageController::class, 'courses'])->name('courses');
@@ -36,12 +39,13 @@ Route::middleware('auth')->group(function() {
     Route::get('offer', [PageController::class, 'offer'])->name('offer');
     Route::get('chat-page', [PageController::class, 'chat'])->name('chat');
     Route::get('history', [PageController::class, 'history'])->name('history');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/change/password/page', [PageController::class, 'changePassword'])->name('change-password');
+    Route::post('/change/password/store', [PageController::class, 'changePasswordStore'])->name('change-password.store');
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('activate', [PageController::class, 'activate'])->name('activate-me');
     //Route::get('activate', [PageController::class, 'activate'])->name('activate-another');
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('change-password-page', [PageController::class, 'changePassword'])->name('change-password');
-
+    
     Route::get('/d1', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
     Route::get('dashboard-overview-2-page', [PageController::class, 'dashboardOverview2'])->name('dashboard-overview-2');
     Route::get('dashboard-overview-3-page', [PageController::class, 'dashboardOverview3'])->name('dashboard-overview-3');
@@ -75,9 +79,7 @@ Route::middleware('auth')->group(function() {
     Route::get('login-page', [PageController::class, 'login'])->name('login');
     Route::get('register-page', [PageController::class, 'register'])->name('register');
     Route::get('error-page-page', [PageController::class, 'errorPage'])->name('error-page');
-    Route::get('update-profile-page', [PageController::class, 'updateProfile'])->name('update-profile');
-    Route::post('updateProfile/store/displayinfo', [PageController::class, 'updateProfile_store_displayinfo'])->name('update-profile.store.displayinfo');
-    Route::post('updateProfile/store/personal', [PageController::class, 'updateProfile_store_personal'])->name('update-profile.store.personal');
+   
     Route::get('regular-table-page', [PageController::class, 'regularTable'])->name('regular-table');
     Route::get('tabulator-page', [PageController::class, 'tabulator'])->name('tabulator');
     Route::get('modal-page', [PageController::class, 'modal'])->name('modal');

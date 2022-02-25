@@ -16,7 +16,46 @@
                         To Activate your account Click here
                     </h2>
                     <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                        <button class="btn btn-rounded-primary w-24 mr-1 mb-2">Activate</button>
+                        <button data-tw-toggle="modal" data-tw-target="#delete-modal-preview" class="btn btn-rounded-primary w-24 mr-1 mb-2">Activate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 lg:col-span-12 mt-8 ">
+                <div class="box bg-primary p-5 w-64 mx-auto">
+                    <div class="flex">
+                        <div class="">
+                            <div class="text-md">Receiver : username</div>
+                            <div class="text-md">Bank : details</div>
+                            <div class="text-md">phone : unmber</div>
+                        </div>
+                        <div class="w-12 h-12 bg-pending rounded-full mr-3"></div>
+                    </div>
+                    <div class="text-md flex mt-8">
+                        <button class="btn btn-sm btn-rounded btn-success-soft mr-1">chat</button>
+                        <button class="btn btn-sm btn-rounded btn-warning-soft mr-1">upload</button>
+                        <button class="btn btn-sm btn-rounded btn-danger-soft mr-1">dispute</button>
+                    </div>
+                </div>
+            </div>
+            <div id="delete-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <div class="p-5 text-center">
+                                <i data-feather="smile" style="color:blue;" class="w-16 h-16 text-danger mx-auto mt-3"></i> 
+                                <div class="text-3xl mt-5">Are you sure you want<br>"Stage Name, Level Name"<br>Activation?
+</div>
+                                <div class="text-slate-500 mt-2">
+                                You will be paired with a user to Activate<br>"Stage Name, Level Name
+with Level Amount"<br>to a user that will be displayed on your dashboard.
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="px-5 pb-8 text-center">
+                                <button type="button" data-tw-dismiss="modal" class="btn btn-success w-24 mr-1">YES</button>
+                                <button type="button" class="btn btn-danger w-24">NO</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -24,23 +63,34 @@
             <!-- BEGIN: General Report -->
             <div class="col-span-12 mt-8">
                 <div class="intro-y flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        Statistics
+                    <i data-feather="codepen" style="color:green;" class="block text-primary w-5 h-5 "></i>
+                    <h2 class="text-lg font-medium truncate ml-3">
+                     Statistics
                     </h2>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                        <div class="box p-5">
-                                <div class="text-lg mt-1">Total Earning : NGN 135,000</div>
-                                <div class="text-lg text-justify mt-1">Total Unlocked Course : 5</div>
-
+                        <div class="box bg-primary p-5">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                <span class="text-md">Total Earning : NGN 135,000</span>
+                            </div>
+                            <div class="flex items-center mt-3">
+                                <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                <div class="text-md text-justify ">Total Unlocked Course : 5</div>
+                            </div>    
                         </div>
                     </div>
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
-                        <div class="box p-5">
-                                <div class="text-lg mt-1">Total Completed Stage : 1</div>
-                                <div class="text-lg text-justify mt-1">Total Completed Level : 5</div>
-
+                        <div class="box bg-primary p-5">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
+                                <span class="text-md">Total Completed Stage : 1</span>
+                            </div>
+                            <div class="flex items-center mt-3">
+                                <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
+                                <div class="text-md text-justify ">Total Completed Level : 5</div>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -50,7 +100,8 @@
             <!-- BEGIN: Weekly Top Products -->
             <div class="col-span-12 mt-6">
                 <div class="intro-y block sm:flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
+                    <i data-feather="activity" style="color:green;" class="block text-primary w-5 h-5 "></i>
+                    <h2 class="text-lg font-medium truncate ml-3">
                         User Activities
                     </h2>
                     
