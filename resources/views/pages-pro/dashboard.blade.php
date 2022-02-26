@@ -10,31 +10,89 @@
 
             <!--{{ print_r($loggedin_user); }}
             {{ print("---".$loggedin_user->email_verified_at."^|^".$loggedin_user->state."---")}} -->
-            <div class="col-span-12 lg:col-span-6 mt-8">
-                <div class="intro-y block sm:flex items-center h-10">
-                    <h2 class="text-lg font-medium truncate mr-5">
-                        To Activate your account Click here
-                    </h2>
-                    <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-                        <button data-tw-toggle="modal" data-tw-target="#delete-modal-preview" class="btn btn-rounded-primary w-24 mr-1 mb-2">Activate</button>
-                    </div>
+            <div class="col-span-12 lg:col-span-12 mt-8">
+                <div  class="text-center">
+                    <div class="mb-5 text-lg text-success" style="margin-left:0rem">
+                        You are currently on “Current Stage Name” “Current LeveL Name”<br>
+There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
+</div>
+                    <span class="mt-5 text-lg" style="margin-left:25rem">
+                        To Activate your account,&nbsp&nbsp&nbsp&nbsp Click here...
+                    </span>
+                    <button data-tw-toggle="modal" data-tw-target="#delete-modal-preview" class="btn btn-sm btn-rounded-pending w-24 ml-5 mb-2">Activate</button>
                 </div>
             </div>
             <div class="col-span-12 lg:col-span-12 mt-8 ">
-                <div class="box bg-primary p-5 w-64 mx-auto">
+                <div  class="text-center mb-5">
+                    <span class=" text-lg" style="margin-left:0rem">
+                        Dear “Username”, kindly pay your Activation Fee for this Level to the below Bank Details.
+                    </span>
+                </div>
+                <div  class="text-center mb-5">
+                    <span class="text-success text-lg" style="margin-left:0rem">
+                    Congratulations! You have been ACTIVATED & Your New Course has been <a href="">UNLOCKED</a>...
+                    </span>
+                </div>
+                <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
                     <div class="flex">
-                        <div class="">
-                            <div class="text-md">Receiver : username</div>
-                            <div class="text-md">Bank : details</div>
+                        <div class="mx-auto my-auto items-center">
+                            <div class="text-md mb-3">Receiver : username</div>
+                            <div class="text-md mb-3">Bank : details</div>
                             <div class="text-md">phone : unmber</div>
                         </div>
-                        <div class="w-12 h-12 bg-pending rounded-full mr-3"></div>
+                        <div class="relative mx-auto">
+                            <canvas id="donut-chart-widget1" height="120" width="120"></canvas>
+                            <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                <div class="text-2xl font-medium">02:50</div>
+                                <div class="text-slate-500 mt-0.5">Remained</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-md flex mt-8">
-                        <button class="btn btn-sm btn-rounded btn-success-soft mr-1">chat</button>
-                        <button class="btn btn-sm btn-rounded btn-warning-soft mr-1">upload</button>
-                        <button class="btn btn-sm btn-rounded btn-danger-soft mr-1">dispute</button>
+                    <div class="text-md text-center mt-8">
+                        <button class="btn btn-sm btn-rounded btn-success-soft  ml-auto">CHAT</button>
+                        <button class="btn btn-sm btn-rounded btn-warning-soft  ">UPLOAD</button>
+                        <button class="btn btn-sm btn-rounded btn-danger-soft  mr-auto">DISPUTE</button>
                     </div>
+                </div>
+                <div class="text-center mt-5">
+                    <span class=" text-sm" style="margin-top:5rem">
+                       <span class="text-danger text-md">WARNING!</span>&nbsp&nbsp Please, kindly make payment & upload your correct proof of payment.
+                    </span>
+                </div>
+            </div>
+            <div class="col-span-12 lg:col-span-12 mt-8 ">
+                <div  class="text-center mb-5">
+                    <span class=" text-lg" style="margin-left:0rem">
+                    Dear “Username”, you have been requested by “Paying Username” for Activation below
+is the Contact Details.
+                    </span>
+                </div>
+                <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
+                    <div class="flex">
+                        <div class="mx-auto my-auto items-center">
+                            <div class="text-md mb-3">Payeer : username</div>
+                            <div class="text-md mb-3">Bank : details</div>
+                            <div class="text-md">Phone : unmber</div>
+                        </div>
+                        <div class="relative mx-auto">
+                            <canvas id="donut-chart-widget2" height="120" width="120"></canvas>
+                            <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                <div class="text-2xl font-medium">02:50</div>
+                                <div class="text-slate-500 mt-0.5">Remained</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-md text-center mt-8">
+                        <button class="btn btn-sm btn-rounded btn-warning-soft  ml-auto">CHAT</button>
+                        <button class="btn btn-sm btn-rounded btn-secondary-soft  ">ACTIVATE</button>
+                        <button class="btn btn-sm btn-rounded btn-dark-soft  ">DECLINE</button>
+                        <button class="btn btn-sm btn-rounded btn-danger-soft  mr-auto">DISPUTE</button>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <span class=" text-sm" style="margin-top:5rem">
+                       <span class="text-danger text-md">Caution!</span>&nbsp&nbsp Do not activate if you have not received payment
+                    </span>
                 </div>
             </div>
             <div id="delete-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
@@ -44,10 +102,9 @@
                             <div class="p-5 text-center">
                                 <i data-feather="smile" style="color:blue;" class="w-16 h-16 text-danger mx-auto mt-3"></i> 
                                 <div class="text-3xl mt-5">Are you sure you want<br>"Stage Name, Level Name"<br>Activation?
-</div>
+                                </div>
                                 <div class="text-slate-500 mt-2">
-                                You will be paired with a user to Activate<br>"Stage Name, Level Name
-with Level Amount"<br>to a user that will be displayed on your dashboard.
+                                    You will be paired with a user to Activate<br>"Stage Name, Level Name with Level Amount"<br>to a user that will be displayed on your dashboard.
                                     <br>
                                 </div>
                             </div>
@@ -204,6 +261,43 @@ function showTime() {
   }
 
   setInterval(showTime, 1000);
+
+  const dataDoughnut = {
+    //labels: ["JavaScript", "Ruby"],
+    datasets: [
+      {
+        //label: "My First Dataset",
+        data: [60, 40],
+        backgroundColor: [
+          "rgb(164, 101, 241)",
+          "rgb(101, 143, 241)",
+        ],
+        borderColor: [
+          "rgb(255, 255, 255)",
+          "rgb(255, 255, 255)",
+        ],
+        borderWidth:1,
+        hoverOffset: 4,
+      },
+    ],
+  };
+
+  const configDoughnut = {
+    type: "doughnut",
+    data: dataDoughnut,
+    options: {
+        cutoutPercentage:86
+    },
+  };
+
+  var chartBar = new Chart(
+    document.getElementById("donut-chart-widget1"),
+    configDoughnut
+  );
+  var chartBar1 = new Chart(
+    document.getElementById("donut-chart-widget2"),
+    configDoughnut
+  );
 
 </script>
 @endsection
