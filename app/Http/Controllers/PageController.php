@@ -773,6 +773,11 @@ class PageController extends Controller
     {
         return view('pages-pro/course');
     }
+    public function addcourses_page()
+    {
+        return view('pages-pro/addcourses');
+
+    }
     /**
      * Show specified view.
      *

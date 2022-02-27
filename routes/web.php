@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/change/password/store', [PageController::class, 'changePasswordStore'])->name('change-password.store');
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('activate', [PageController::class, 'activate'])->name('activate-me');
+    Route::get('addcourses/page', [PageController::class, 'addcourses_page'])->name('addcourses.page');
     //Route::get('activate', [PageController::class, 'activate'])->name('activate-another');
     
     Route::get('/d1', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
