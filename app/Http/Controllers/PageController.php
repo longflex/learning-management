@@ -778,6 +778,29 @@ class PageController extends Controller
         return view('pages-pro/addcourses');
 
     }
+    public function addcourses_store(Request $request)
+    {
+        // $validatedData = $request->validate([
+        //     'crypto' => 'required|max:50|min:45',
+        //     'phone' => 'required|numeric|max:20|min:7',
+        //     'bank' => 'required|max:50|min:12',
+        // ]);
+
+        $title = $request->input("wysi");
+
+        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".$title." \n", 3, "c:/my-errors.log");
+
+        return redirect()->back()->with('status', $title);
+        $id = $request->input("id");
+        $user = User::find($id);
+
+        $user->phone = $request->phone;
+        $user->bank = $request->bank;
+        $user->crypto = $request["crypto"];
+        $user->save();
+        
+        
+    }
     /**
      * Show specified view.
      *

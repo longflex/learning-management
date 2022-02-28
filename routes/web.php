@@ -45,7 +45,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('activate', [PageController::class, 'activate'])->name('activate-me');
     Route::get('addcourses/page', [PageController::class, 'addcourses_page'])->name('addcourses.page');
+    Route::post('addcourses/store', [PageController::class, 'addcourses_store'])->name('addcourses.store');
+
     //Route::get('activate', [PageController::class, 'activate'])->name('activate-another');
+
     
     Route::get('/d1', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
     Route::get('dashboard-overview-2-page', [PageController::class, 'dashboardOverview2'])->name('dashboard-overview-2');

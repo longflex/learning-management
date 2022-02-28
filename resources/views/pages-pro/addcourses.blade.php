@@ -5,6 +5,8 @@
 @endsection
 
 @section('subcontent')
+<form method="POST" enctype="multipart/form-data" action="{{ route('addcourses.store') }}">
+            @csrf   
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">Add New Post</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -32,41 +34,16 @@
             <button type="button" class="btn box mr-2 flex items-center ml-auto sm:ml-0">
                 <i class="w-4 h-4 mr-2" data-feather="eye"></i> Preview
             </button>
-            <div class="dropdown">
-                <button class="dropdown-toggle btn btn-primary shadow-md flex items-center" aria-expanded="false" data-tw-toggle="dropdown">
-                    Save <i class="w-4 h-4 ml-2" data-feather="chevron-down"></i>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
-                        <li>
-                            <a href="" class="dropdown-item">
-                                <i data-feather="file-text" class="w-4 h-4 mr-2"></i> As New Post
-                            </a>
-                        </a>
-                        <li>
-                            <a href="" class="dropdown-item">
-                                <i data-feather="file-text" class="w-4 h-4 mr-2"></i> As Draft
-                            </a>
-                        </a>
-                        <li>
-                            <a href="" class="dropdown-item">
-                                <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Export to PDF
-                            </a>
-                        </a>
-                        <li>
-                            <a href="" class="dropdown-item">
-                                <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Export to Word
-                            </a>
-                        </a>
-                    </ul>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary shadow-md flex items-center" aria-expanded="false" >
+                Save 
+            </button>
         </div>
     </div>
+    
     <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
         <!-- BEGIN: Post Content -->
         <div class="intro-y col-span-12 lg:col-span-8">
-            <input type="text" class="intro-y form-control py-3 px-4 box pr-10" placeholder="Title">
+            <input name="title" type="text" class="intro-y form-control py-3 px-4 box pr-10" placeholder="Title">
             <div class="post intro-y overflow-hidden box mt-5">
                 <ul class="post__tabs nav nav-tabs flex-col sm:flex-row bg-slate-200 dark:bg-darkmode-800" role="tablist">
                     <li class="nav-item">
@@ -92,8 +69,15 @@
                                 <i data-feather="chevron-down" class="w-4 h-4 mr-2"></i> Text Content
                             </div>
                             <div class="mt-5">
-                                <div class="editor">
-                                    <p>Content of the editor.</p>
+                                <textarea name="wysi" class="editor" >
+                                    
+                                    <p>Content of the editor.qwqw</p>
+                                </textarea>
+                                <div>
+                                    <oembed url="http://www.youtube.com/watch?v=erLk59H86ww"></oembed>
+                                    @if(Session::has('status'))
+                                    {!! Session::get('status') !!}
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -197,6 +181,7 @@
         </div>
         <!-- END: Post Info -->
     </div>
+    </form>
 @endsection
 
 @section('script')
