@@ -88,11 +88,11 @@
                                             <div class="p-5">
                                                 <div class="flex items-center">
                                                     <i data-feather="log-in" class="block text-primary w-5 h-5 " style="color:yellow;"></i>
-                                                    <div class="text-base font-medium ml-3 truncate">Device Login Information</div>
+                                                    <div class="text-base font-medium ml-3 truncate" style="color:white;">Device Login Information</div>
                                                 </div>
-                                                <div class="text-slate-300 mt-1 ml-8">Today : <span id="time"></span></div>
-                                                <div class="text-slate-300 text-justify mt-1 ml-8">Your Login IP : {{$user_ip}}</div>
-                                                <div class="text-slate-300 text-justify mt-1 ml-8">Logged in via DESKTOP</div>
+                                                <div class="text-slate-300 mt-1 ml-8" style="color:white;">Today : <span id="time"></span></div>
+                                                <div style="color:white;" class="text-slate-300 text-justify mt-1 ml-8">Your Login IP : {{$user_ip}}</div>
+                                                <div style="color:white;" class="text-slate-300 text-justify mt-1 ml-8">Logged in via DESKTOP</div>
                                             </div>
                                         </div>
                                     </div>
