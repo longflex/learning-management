@@ -34,7 +34,7 @@ There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
                     </span>
                 </div>
                 <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
-                    <div class="flex">
+                    <div class="flex txt-white">
                         <div class="mx-auto my-auto items-center">
                             <div class="text-md mb-3">Receiver : username</div>
                             <div class="text-md mb-3">Bank : details</div>
@@ -68,7 +68,7 @@ is the Contact Details.
                     </span>
                 </div>
                 <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
-                    <div class="flex">
+                    <div class="flex txt-white">
                         <div class="mx-auto my-auto items-center">
                             <div class="text-md mb-3">Payeer : username</div>
                             <div class="text-md mb-3">Bank : details</div>
@@ -125,7 +125,7 @@ is the Contact Details.
                      Statistics
                     </h2>
                 </div>
-                <div class="grid grid-cols-12 gap-6 mt-5">
+                <div class="grid grid-cols-12 gap-6 mt-5 txt-white">
                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
                         <div class="box bg-primary p-5">
                             <div class="flex items-center">

@@ -3,7 +3,16 @@
 @section('head')
     @yield('subhead')
 @endsection
+@section('substyle')
+<style>
+.txt-white{
+    color:white;
 
+}
+
+</style>
+
+@endsection
 @section('content')
     @include('../layout/components/top-bar')
     <div class="wrapper">
@@ -85,14 +94,14 @@
                                 <div class="grid grid-cols-12 gap-6 mt-5">
                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
                                         <div class="box p-5 bg-primary">
-                                            <div class="p-5">
+                                            <div class="p-5 txt-white">
                                                 <div class="flex items-center">
                                                     <i data-feather="log-in" class="block text-primary w-5 h-5 " style="color:yellow;"></i>
-                                                    <div class="text-base font-medium ml-3 truncate" style="color:white;">Device Login Information</div>
+                                                    <div class="text-base font-medium ml-3 truncate">Device Login Information</div>
                                                 </div>
-                                                <div class="text-slate-300 mt-1 ml-8" style="color:white;">Today : <span id="time"></span></div>
-                                                <div style="color:white;" class="text-slate-300 text-justify mt-1 ml-8">Your Login IP : {{$user_ip}}</div>
-                                                <div style="color:white;" class="text-slate-300 text-justify mt-1 ml-8">Logged in via DESKTOP</div>
+                                                <div class="text-slate-300 mt-1 ml-8">Today : <span id="time"></span></div>
+                                                <div class="text-slate-300 text-justify mt-1 ml-8">Your Login IP : {{$user_ip}}</div>
+                                                <div class="text-slate-300 text-justify mt-1 ml-8">Logged in via DESKTOP</div>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +110,7 @@
                                                 <div class="grid grid-cols-12 gap-6">
                                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
                                                         <div class="box p-10 text-center shadow-lg bg-primary">
-                                                                <span class="text-base font-medium truncate">Current Stage</span>
+                                                                <span class="text-base font-medium truncate txt-white">Current Stage</span>
                                                                 <div class="font-medium  mt-5  text-center">
                                                                     <button type="button" class="btn  btn-outline-success py-1 px-2">Stage Name</button>
                                                                 </div>
@@ -109,7 +118,7 @@
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
                                                         <div class="box p-10 text-center bg-primary shadow-lg ">
-                                                                <span class="text-base font-medium truncate">Current Level</span>
+                                                                <span class="text-base font-medium truncate txt-white">Current Level</span>
                                                                 <div class="font-medium  mt-5 text-center">
                                                                     <button type="button" class="btn btn-outline-success py-1 px-2">Stage Level</button>
                                                                 </div>
