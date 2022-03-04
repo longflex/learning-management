@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\CoursesCategories;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -780,8 +781,37 @@ class PageController extends Controller
     {
         $categories = Category::all();
 
-        return view('pages-pro/addcourses', compact(['layout'=>'admin-menu'],'categories'));
+        return view('pages-pro/addcourses', compact('categories'))->with(['layout'=>'admin-menu']);
+    }
+    public function addcourses_store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'contentval' => 'required|max:10000',
+            'categories' => 'required',
+            'brief_title' => 'required|max:200',
+            'portfolio' => 'required|max:300|url',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('addcourses/page')
+                        ->withErrors($validator)
+                        ->withInput($request->all);
+        }
 
+        $course = Course::create($request->all());
+
+        $categories = $request->categories;
+        foreach ($categories as $category){
+            $newCoursesCategories = new CoursesCategories();
+            $newCoursesCategories->course_id = $course->id;
+            $newCoursesCategories->category_id = $category;
+            $course->categories()->save($newCoursesCategories);
+        }
+
+        return redirect()->back()->withInput()->with(['success'=>"course successfully added!",'id'=>$course->id]);
+        
+        
     }
     public function editcourses_page($id)
     {
@@ -795,17 +825,17 @@ class PageController extends Controller
             $selectedCategories []= $category->category_id;
         }
 
-        return view('pages-pro/editcourses',compact(['layout'=>'admin-menu'], 'categories','mode', 'course', 'selectedCategories'));
+        return view('pages-pro/editcourses',compact('categories','mode', 'course', 'selectedCategories'))->with(['layout'=>'admin-menu']);
     }
     public function courses_list()
     {
 
         $courses = Course::all();
 
-$courses->each(function($course) // foreach($posts as $post) { }
-{
-    //do something
-});
+        $courses->each(function($course) // foreach($posts as $post) { }
+        {
+            //do something
+        });
         return view('pages-pro/courses_list', ['layout'=>'admin-menu','courses'=>$courses]);
 
     }
@@ -814,44 +844,7 @@ $courses->each(function($course) // foreach($posts as $post) { }
         return view('pages-pro/levels', ['layout'=>'admin-menu']);
 
     }
-    public function addcourses_store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:100',
-            'contentval' => 'required|max:10000',
-            'category' => 'required',
-            'brief_title' => 'required|max:200',
-            'portfolio' => 'required|max:300|url',
-        ]);
- 
-        if ($validator->fails()) {
-            return redirect('addcourses/page')
-                        ->withErrors($validator)
-                        ->withInput($request->all);
-        }
-
-// //dd($request->all,$request);
-//         $title = $request->input("title");
-//         $content = $request->input("content");
-//         $brief = $request->input("brief");
-//         $preview_url = $request->input("preview_url");
-//         $postdate = $request->input("postdate");
-
-//         //error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".$title." \n", 3, "c:/my-errors.log");
-
-// $arr = [
-//             'name' => $title,
-//             'content' => $content,
-//             'brief_title' => $brief,
-//             'portfolio' => $preview_url,
-//             'posted_at' => $postdate,
-// ];
-        $id = Course::create($request->all());
-
-        return redirect()->back()->withInput()->with(['success'=>"course successfully added!",'id'=>$id->id]);
-        
-        
-    }
+    
     /**
      * Show specified view.
      *

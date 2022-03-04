@@ -67,7 +67,6 @@
                 <div class="mt-3">
                     <label for="category" class="form-label">Categories</label>
                     <select name="categories[]" data-placeholder="Select categories" class="tom-select w-full" id="category" multiple>
-                        <option value=""></option>
                         @foreach ($categories as $category)
                             <option value="{{$category->id}}" >{{$category->name}}</option>
                         @endforeach
