@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Main\TopMenu;
 use App\Main\SideMenu;
 use App\Main\SimpleMenu;
+use App\Main\AdminMenu;
 
 class MenuComposer
 {
@@ -25,6 +26,7 @@ class MenuComposer
             $view->with('top_menu', TopMenu::menu());
             $view->with('side_menu', SideMenu::menu());
             $view->with('simple_menu', SimpleMenu::menu());
+            $view->with('admin_menu', AdminMenu::menu());
             $view->with('first_level_active_index', $activeMenu['first_level_active_index']);
             $view->with('second_level_active_index', $activeMenu['second_level_active_index']);
             $view->with('third_level_active_index', $activeMenu['third_level_active_index']);

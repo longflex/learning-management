@@ -69,7 +69,15 @@
                     <select name="categories[]" data-placeholder="Select categories" class="tom-select w-full" id="category" multiple>
                         <option value=""></option>
                         @foreach ($categories as $category)
-                            <option value="{{$category->id}}" >{{$category->name}}</option>
+                            <option value="{{$category->id}}" 
+                            
+                            @if(isset($course))
+                                @if( in_array($category->id, $selectedCategories))
+                                    {{ "selected" }}
+                                @endif
+                            @endif
+                            
+                            >{{$category->name}}</option>
                         @endforeach
                     </select>
                 </div>

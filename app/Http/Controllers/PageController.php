@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Category;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 class PageController extends Controller
 {
     /**
@@ -775,29 +778,77 @@ class PageController extends Controller
     }
     public function addcourses_page()
     {
-        return view('pages-pro/addcourses');
+        $categories = Category::all();
+
+        return view('pages-pro/addcourses', compact(['layout'=>'admin-menu'],'categories'));
+
+    }
+    public function editcourses_page($id)
+    {
+        $course = Course::findOrFail($id);
+        $mode = 'edit';
+        $categories = Category::all();
+
+        $selectedCategories = [];
+        
+        foreach($course->categories as $category){
+            $selectedCategories []= $category->category_id;
+        }
+
+        return view('pages-pro/editcourses',compact(['layout'=>'admin-menu'], 'categories','mode', 'course', 'selectedCategories'));
+    }
+    public function courses_list()
+    {
+
+        $courses = Course::all();
+
+$courses->each(function($course) // foreach($posts as $post) { }
+{
+    //do something
+});
+        return view('pages-pro/courses_list', ['layout'=>'admin-menu','courses'=>$courses]);
+
+    }
+    public function levels_page()
+    {
+        return view('pages-pro/levels', ['layout'=>'admin-menu']);
 
     }
     public function addcourses_store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'crypto' => 'required|max:50|min:45',
-        //     'phone' => 'required|numeric|max:20|min:7',
-        //     'bank' => 'required|max:50|min:12',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'contentval' => 'required|max:10000',
+            'category' => 'required',
+            'brief_title' => 'required|max:200',
+            'portfolio' => 'required|max:300|url',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect('addcourses/page')
+                        ->withErrors($validator)
+                        ->withInput($request->all);
+        }
 
-        $title = $request->input("wysi");
+// //dd($request->all,$request);
+//         $title = $request->input("title");
+//         $content = $request->input("content");
+//         $brief = $request->input("brief");
+//         $preview_url = $request->input("preview_url");
+//         $postdate = $request->input("postdate");
 
-        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".$title." \n", 3, "c:/my-errors.log");
+//         //error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".$title." \n", 3, "c:/my-errors.log");
 
-        return redirect()->back()->with('status', $title);
-        $id = $request->input("id");
-        $user = User::find($id);
+// $arr = [
+//             'name' => $title,
+//             'content' => $content,
+//             'brief_title' => $brief,
+//             'portfolio' => $preview_url,
+//             'posted_at' => $postdate,
+// ];
+        $id = Course::create($request->all());
 
-        $user->phone = $request->phone;
-        $user->bank = $request->bank;
-        $user->crypto = $request["crypto"];
-        $user->save();
+        return redirect()->back()->withInput()->with(['success'=>"course successfully added!",'id'=>$id->id]);
         
         
     }

@@ -28,6 +28,7 @@ Route::middleware('loggedin')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
+    Route::get('levels/page', [PageController::class, 'levels_page'])->name('levels.page');
     Route::get('update-profile-page', [PageController::class, 'updateProfile'])->name('update-profile');
     Route::post('updateProfile/store/displayinfo', [PageController::class, 'updateProfile_store_displayinfo'])->name('update-profile.store.displayinfo');
     Route::post('updateProfile/store/personal', [PageController::class, 'updateProfile_store_personal'])->name('update-profile.store.personal');
@@ -45,7 +46,9 @@ Route::middleware('auth')->group(function() {
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('activate', [PageController::class, 'activate'])->name('activate-me');
     Route::get('addcourses/page', [PageController::class, 'addcourses_page'])->name('addcourses.page');
+    Route::get('editcourses/page/{id}', [PageController::class, 'editcourses_page'])->name('editcourses.page');
     Route::post('addcourses/store', [PageController::class, 'addcourses_store'])->name('addcourses.store');
+    Route::get('courses-list', [PageController::class, 'courses_list'])->name('courses.list');
 
     //Route::get('activate', [PageController::class, 'activate'])->name('activate-another');
 

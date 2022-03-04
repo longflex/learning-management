@@ -7,7 +7,6 @@
 <style>
 .txt-white{
     color:white;
-
 }
 
 </style>

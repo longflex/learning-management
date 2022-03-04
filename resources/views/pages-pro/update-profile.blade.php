@@ -155,14 +155,14 @@
                             <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
                                 <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                        <img class="rounded-md" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                                        <img id="image-preview" class="rounded-md" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
                                         <!-- <div title="Remove this profile photo?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
                                             <i data-feather="x" class="w-4 h-4"></i>
                                         </div> -->
                                     </div>
                                     <div class="mx-auto cursor-pointer relative mt-5">
                                         <button type="button" class="btn btn-primary w-full">Change Photo</button> 
-                                        <input name="photo" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                        <input name="photo" id="photo" type="file" class="w-full h-full top-0 left-0 absolute opacity-0">
                                     </div>
                                 </div>
                             </div>
@@ -221,4 +221,24 @@
             <!-- END: Personal Information -->
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+    $(function()
+    {
+        $('#photo').change( function()
+        {
+            var file = this.files[0];
+            if(file){
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(e){
+                    $('#image-preview').attr('src',e.target.result);
+                }
+            }
+        });
+    });
+    </script>
 @endsection
