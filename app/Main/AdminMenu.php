@@ -21,9 +21,17 @@ class AdminMenu
                 ],
                 'title' => 'Users',
             ],
+            'stages' => [
+                'icon' => 'home',
+                'route_name' => 'stages.page',
+                'params' => [
+                    'layout' => 'admin-menu'
+                ],
+                'title' => 'Stages',
+            ],
             'levels' => [
                 'icon' => 'home',
-                'route_name' => 'courses.list',
+                'route_name' => 'levels.page',
                 'params' => [
                     'layout' => 'admin-menu'
                 ],
@@ -31,7 +39,7 @@ class AdminMenu
             ],
             'courses' => [
                 'icon' => 'home',
-                'route_name' => 'addcourses.page',
+                'route_name' => 'courses.list',
                 'params' => [
                     'layout' => 'admin-menu'
                 ],

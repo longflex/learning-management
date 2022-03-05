@@ -29,6 +29,11 @@ Route::middleware('loggedin')->group(function() {
 
 Route::middleware('auth')->group(function() {
     Route::get('levels/page', [PageController::class, 'levels_page'])->name('levels.page');
+    Route::post('addlevels-page', [PageController::class, 'addlevels_page'])->name('addlevels.page');
+    Route::get('stages-page', [PageController::class, 'stages_page'])->name('stages.page');
+    Route::post('addstages-store', [PageController::class, 'addstages_store'])->name('addstages.store');
+Route::get('addshares-page', [PageController::class, 'addshares_page'])->name('addshares.page');
+    Route::post('addshares-store', [PageController::class, 'addshares_store'])->name('addshares.store');
     Route::get('update-profile-page', [PageController::class, 'updateProfile'])->name('update-profile');
     Route::post('updateProfile/store/displayinfo', [PageController::class, 'updateProfile_store_displayinfo'])->name('update-profile.store.displayinfo');
     Route::post('updateProfile/store/personal', [PageController::class, 'updateProfile_store_personal'])->name('update-profile.store.personal');

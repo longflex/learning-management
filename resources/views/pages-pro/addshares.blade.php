@@ -14,12 +14,12 @@
     </div>
 @endif
 
-<form method="POST" enctype="multipart/form-data" action="{{ route('addcourses.store') }}">
+<form method="POST" enctype="multipart/form-data" action="{{ route('addshares.store') }}">
             @csrf   
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Add New Course</h2>
+        <h2 class="text-lg font-medium mr-auto">Add New Share</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <a href="{{route('courses.list')}}" class="btn btn-pending shadow-md w-48 flex items-center" aria-expanded="false" >
+            <a href="{{route('share')}}" class="btn btn-pending shadow-md w-48 flex items-center" aria-expanded="false" >
                 Cancel
             </a>
             <button type="submit" class="btn btn-primary shadow-md w-48 flex items-center" aria-expanded="false" >
@@ -83,7 +83,6 @@
                 <div class="mt-3">
                     <label for="brief_title" class="form-label">Brief text</label>
                     <textarea name="brief_title" id="brief_title" class="w-full">{{ old('brief_title') }}</textarea>
-                    
                 </div>
                 <div class="mt-3">
                     <label for="portfolio" class="form-label">Portfolio Link</label>
@@ -126,20 +125,5 @@
             console.log( error );
         } );
 
-
-    $(function()
-    {
-        $('#photo_store').change( function()
-        {
-            var file = this.files[0];
-            if(file){
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function(e){
-                    $('#image-preview').attr('src',e.target.result);
-                }
-            }
-        });
-    });
     </script>
 @endsection

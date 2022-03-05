@@ -7,6 +7,10 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\CoursesCategories;
+use App\Models\Share;
+use App\Models\SharesCategories;
+use App\Models\Stage;
+use App\Models\Level;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -741,8 +745,43 @@ class PageController extends Controller
     }
     public function share()
     {
+        $shares = Share::all();
+        return view('pages-pro/share',compact('shares'))->with(['layout'=>'side-menu-private']);
+    }
+    public function addshares_page()
+    {
+        $categories = Category::all();
+        $levels = Level::all();
+        return view('pages-pro/addshares', compact('categories','levels'))->with(['layout'=>'side-menu-private']);
+    }
+    public function addshares_store(Request $request)
+    {
+        //dd($request->categories,$request->setactive);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'contentval' => 'required|max:10000',
+            'categories' => 'required',
+            'brief_title' => 'required|max:200',
+            'portfolio' => 'required|max:300|url',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput($request->all);
+        }
 
-        return view('pages-pro/share');
+        $share = Share::create($request->all());
+
+        $categories = $request->categories;
+        foreach ($categories as $category){
+            $newSharesCategories = new SharesCategories();
+            $newSharesCategories->share_id = $share->id;
+            $newSharesCategories->category_id = $category;
+            $share->categories()->save($newSharesCategories);
+        }
+
+        return redirect()->back()->withInput()->with(['success'=>"A share successfully added!",'id'=>$share->id]);
     }
     public function offer()
     {
@@ -780,11 +819,12 @@ class PageController extends Controller
     public function addcourses_page()
     {
         $categories = Category::all();
-
-        return view('pages-pro/addcourses', compact('categories'))->with(['layout'=>'admin-menu']);
+        $levels = Level::all();
+        return view('pages-pro/addcourses', compact('categories','levels'))->with(['layout'=>'admin-menu']);
     }
     public function addcourses_store(Request $request)
     {
+        //dd($request->categories,$request->setactive);
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:100',
             'contentval' => 'required|max:10000',
@@ -809,7 +849,7 @@ class PageController extends Controller
             $course->categories()->save($newCoursesCategories);
         }
 
-        return redirect()->back()->withInput()->with(['success'=>"course successfully added!",'id'=>$course->id]);
+        return redirect()->back()->withInput()->with(['success'=>"A course successfully added!",'id'=>$course->id]);
         
         
     }
@@ -841,10 +881,56 @@ class PageController extends Controller
     }
     public function levels_page()
     {
-        return view('pages-pro/levels', ['layout'=>'admin-menu']);
+        //$a = Level::all();
+        $a = Stage::where('setactive','1')->get();
+        return view('pages-pro/levels', compact('a'))->with(['layout'=>'admin-menu']);
 
     }
-    
+    public function addlevels_page(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100|unique:levels',
+            'order' => 'required|max:1000|numeric',
+            'fee' => 'required|max:10000|numeric',
+
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $stage = Level::create($request->all());
+
+        return redirect()->back()->withInput()->with(['success'=>"A state successfully added!"]);
+
+    }
+    public function stages_page()
+    {
+        $a = Stage::all();
+        return view('pages-pro/stages', compact('a'))->with(['layout'=>'admin-menu']);
+
+    }
+    public function addstages_store(Request $request)
+    {
+        //dd($request->categories,$request->setactive);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100|unique:stages',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $stage = Stage::create($request->all());
+
+        return redirect()->back()->withInput()->with(['success'=>"A state successfully added!"]);
+        
+        
+    }
     /**
      * Show specified view.
      *

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Share extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class Course extends Model
     //protected $guarded = [];
     public function categories()
     {
-        return $this->hasMany(CoursesCategories::class);
+        return $this->hasMany(SharesCategories::class);
     }
 }

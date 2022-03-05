@@ -13,21 +13,7 @@
         </h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             <a href="{{ route('addcourses.page') }}" class="btn btn-primary shadow-md mr-2">Add New Course</a>
-            <div class="dropdown ml-auto sm:ml-0">
-                <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <ul class="dropdown-content">
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-feather="share-2" class="w-4 h-4 mr-2"></i> Share Post </a>
-                        </li>
-                        <li>
-                            <a href="" class="dropdown-item"> <i data-feather="download" class="w-4 h-4 mr-2"></i> Download Post </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            
         </div>
     </div>
     <div class="intro-y grid grid-cols-12 gap-6 mt-5">
@@ -57,7 +43,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <div class="h-40 2xl:h-56 image-fit">   <!-- http://i3.ytimg.com/vi/erLk59H86ww/hqdefault.jpg -->
+                    <div class="h-40 2xl:h-56 image-fit">  
                         <img alt="Icewall Tailwind HTML Admin Template" class="rounded-md" src="{{$course->portfolio}}" onerror="this.src='dist/images/placeholders/200x200.jpg'">
                     </div>
                     <a href="" class="block font-medium text-base mt-5">{{$course->name}}</a> 
