@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\DarkModeController;
 use App\Http\Controllers\ColorSchemeController;
+use App\Http\Controllers\NotificationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +18,7 @@ use App\Http\Controllers\ColorSchemeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/send-notification', [NotificationController::class, 'sendOfferNotification'])->name('sendoffer');
 Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
 Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class, 'switch'])->name('color-scheme-switcher');
 

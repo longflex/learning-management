@@ -111,7 +111,7 @@
                                                         <div class="box p-10 text-center shadow-lg bg-primary">
                                                                 <span class="text-base font-medium truncate txt-white">Current Stage</span>
                                                                 <div class="font-medium  mt-5  text-center">
-                                                                    <button type="button" class="btn  btn-outline-success py-1 px-2">Stage Name</button>
+                                                                    <a href="{{route('sendoffer')}}" type="button" class="btn  btn-outline-success py-1 px-2">Stage Name</a>
                                                                 </div>
                                                         </div>
                                                     </div>
