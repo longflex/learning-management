@@ -56,7 +56,7 @@
                     <label class="form-label">Written By</label>
                         <div class="btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
                             <div class="w-6 h-6 image-fit mr-3">
-                                <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                                <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/app/public/images/' . $loggedin_user->photo) }}">
                             </div>
                             <div class="truncate">{{ $loggedin_user->name }}</div>
                         </div>

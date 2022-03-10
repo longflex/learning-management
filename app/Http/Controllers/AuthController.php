@@ -74,7 +74,6 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n -2 \n", 3, "c:/my-errors.log");
         //echo '<script> alert("1"); </script>';
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

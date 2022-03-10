@@ -14,7 +14,7 @@
             <div class="intro-y box mt-5">
                 <div class="relative flex items-center p-5">
                     <div class="w-12 h-12 image-fit">
-                    <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                    <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/app/public/images/' . $loggedin_user->photo) }}">
                     </div>
                     <div class="ml-4 mr-auto">
                     <div class="font-medium text-base">{{ $loggedin_user->name }}</div>

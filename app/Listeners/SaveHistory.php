@@ -29,7 +29,6 @@ class SaveHistory
      */
     public function handle(RecordHistory $event)
     {
-        error_log("\n".$event->message."\n".round(microtime(true) * 1000)."\n ".time()."--- \nhist", 3, "c:/my-errors.log");
         $userSchema = Auth::user();
         $offerData = $event->message;
         UserHistory::create([

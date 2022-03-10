@@ -683,7 +683,6 @@ class PageController extends Controller
     }
     public function dashboard()
     {
-        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".time()."--- \n".strtotime('09:00:59'), 3, "c:/my-errors.log");
         $courses = Course::all();
         $course_num = $courses->count();
         $levels = Level::all();
@@ -712,7 +711,6 @@ class PageController extends Controller
             }
         }
         $histories = $me->history;
-        //error_log("\n<<".$ticket_time."\n", 3, "c:/my-errors.log");
 
         return view('pages-pro/dashboard', compact('level_num','stage_num','unlocked_levels','locked_levels','unlocked_stages','locked_stages','ticket_time','another','nextlevel','histories'));
     }
@@ -752,7 +750,6 @@ class PageController extends Controller
      */
     public function updateProfile()
     {
-        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n --- \n", 3, "c:/my-errors.log");
         return view('pages-pro/update-profile');
     }
     public function updateProfile_store_displayinfo(Request $request)
@@ -774,7 +771,6 @@ class PageController extends Controller
         $user->address = $request->address;
         $user->country = $request["country"];
         $user->save();
-        //error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n -b-".$hname."-c-".$name."-d-".$path." \n", 3, "c:/my-errors.log");
         
         return redirect()->back()->with('status', 'successfully updated');
     }
@@ -1093,7 +1089,6 @@ class PageController extends Controller
      */
     public function changePassword()
     {
-        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".Hash::make('1')." \n", 3, "c:/my-errors.log");
 
         return view('pages-pro/change-password',['layout'=>'side-menu-private']);
     }

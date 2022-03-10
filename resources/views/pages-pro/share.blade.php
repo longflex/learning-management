@@ -36,7 +36,7 @@
         <div class="intro-y col-span-12 md:col-span-6 xl:col-span-4 box">
             <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 px-5 py-4">
                 <div class="w-10 h-10 flex-none image-fit">
-                    <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                    <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/app/public/images/' . $loggedin_user->photo) }}">
                 </div>
                 <div class="ml-3 mr-auto">
                     <a href="" class="font-medium">{{$loggedin_user->name}}</a> 

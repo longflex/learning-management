@@ -15,8 +15,6 @@
 @section('content')
     @include('../layout/components/top-bar')
     <div class="wrapper">
-        <!-- {{print_r($side_menu)}} -->
-        <!-- {{error_log($first_level_active_index, 3, 'c:/my-errors.log')}} -->
         <div class="wrapper-box">
             <!-- BEGIN: Side Menu -->
             <nav class="side-nav">

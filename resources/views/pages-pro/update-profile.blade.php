@@ -15,7 +15,7 @@
             <div class="intro-y box mt-5">
                 <div class="relative flex items-center p-5">
                     <div class="w-12 h-12 image-fit">
-                        <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                        <img alt="Icewall Tailwind HTML Admin Template" class="rounded-full" src="{{ asset('storage/app/public/images/' . $loggedin_user->photo) }}">
                     </div>
                     <div class="ml-4 mr-auto">
                         <div class="font-medium text-base">{{ $loggedin_user->name }}</div>
@@ -155,7 +155,7 @@
                             <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
                                 <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
                                     <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                        <img id="image-preview" class="rounded-md" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
+                                        <img id="image-preview" class="rounded-md" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/app/public/images/' . $loggedin_user->photo) }}">
                                         <!-- <div title="Remove this profile photo?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2">
                                             <i data-feather="x" class="w-4 h-4"></i>
                                         </div> -->

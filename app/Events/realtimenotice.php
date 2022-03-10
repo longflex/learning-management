@@ -34,7 +34,6 @@ class Realtimenotice implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        error_log("\n222 \n", 3, "c:/my-errors.log");
 
         //return new PrivateChannel('channel-name');
         return ['status-liked'];
