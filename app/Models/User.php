@@ -59,4 +59,16 @@ class User extends Authenticatable
             return url('media-example/no-image.png');
         }
     }
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
+    public function history()
+    {
+        return $this->hasMany(UserHistory::class);
+    }
 }

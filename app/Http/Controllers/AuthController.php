@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RecordHistory;
 use App\Http\Request\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -40,7 +41,7 @@ class AuthController extends Controller
         //     'threads' => 2,
         // ]);
         // $hashed = Hash::make($request->password);
-        // error_log("\n".$request->password."\n ".$hashed." \n", 3, "c:/my-errors.log");
+        // 
         
         if (!\Auth::attempt([
             'email' => $request->email,
@@ -48,6 +49,7 @@ class AuthController extends Controller
         ])) {
             throw new \Exception('Wrong email or password.');
         }
+        event(new RecordHistory('you logged in successfully'));
     }
 
     /**
@@ -58,7 +60,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        event(new RecordHistory('you logged out successfully'));
         \Auth::logout();
+        
         return redirect('login');
     }
     public function registerView()
@@ -85,6 +89,7 @@ class AuthController extends Controller
         ]);
 
         event(new Registered($user));
+        event(new RecordHistory('you created account successfully'));
 
         Auth::login($user);
 

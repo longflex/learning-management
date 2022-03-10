@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Offer extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'contentval','level', 'portfolio','brief_title','setactive','posted_at'
+        'name', 'contentval','level_id', 'portfolio','brief_title','setactive','posted_at','mainlink'
     ];
     //protected $guarded = [];
     public function categories()
     {
-        return $this->hasMany(CoursesCategories::class);
+        return $this->hasMany(OffersCategories::class);
     }
     public function level()
     {

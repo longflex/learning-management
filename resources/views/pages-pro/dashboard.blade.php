@@ -10,11 +10,12 @@
 
             <!--{{ print_r($loggedin_user); }}
             {{ print("---".$loggedin_user->email_verified_at."^|^".$loggedin_user->state."---")}} -->
+            @if ($loggedin_user->state === 'ready')
             <div class="col-span-12 lg:col-span-12 mt-8">
                 <div  class="text-center">
                     <div class="mb-5 text-lg text-success" style="margin-left:0rem">
-                        You are currently on “Current Stage Name” “Current LeveL Name”<br>
-There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
+                        You are currently on “{{$loggedin_user->level->stage->name}}” “{{$loggedin_user->level->name}}”<br>
+There are {{$locked_stages}} Stages, {{ $locked_levels}} Levels & {{$locked_levels}} Courses to Activate & Unlock.
 </div>
                     <span class="mt-5 text-lg" style="margin-left:25rem">
                         To Activate your account,&nbsp&nbsp&nbsp&nbsp Click here...
@@ -22,10 +23,11 @@ There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
                     <button data-tw-toggle="modal" data-tw-target="#delete-modal-preview" class="btn btn-sm btn-rounded-pending w-24 ml-5 mb-2">Activate</button>
                 </div>
             </div>
+            @elseif ($loggedin_user->state === 'request')
             <div class="col-span-12 lg:col-span-12 mt-8 ">
                 <div  class="text-center mb-5">
                     <span class=" text-lg" style="margin-left:0rem">
-                        Dear “Username”, kindly pay your Activation Fee for this Level to the below Bank Details.
+                        Dear <i>{{$loggedin_user->name}}</i>, kindly pay your Activation Fee({{$nextlevel->fee}}$) for {{$nextlevel->name}} to the below Bank Details.
                     </span>
                 </div>
                 <div  class="text-center mb-5">
@@ -36,14 +38,14 @@ There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
                 <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
                     <div class="flex txt-white">
                         <div class="mx-auto my-auto items-center">
-                            <div class="text-md mb-3">Receiver : username</div>
-                            <div class="text-md mb-3">Bank : details</div>
-                            <div class="text-md">phone : unmber</div>
+                            <div class="text-md mb-3">Receiver : {{$another->name}}</div>
+                            <div class="text-md mb-3">Bank : {{$another->bank}}</div>
+                            <div class="text-md">phone : {{$another->phone}}</div>
                         </div>
                         <div class="relative mx-auto">
                             <canvas id="donut-chart-widget1" height="120" width="120"></canvas>
                             <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
-                                <div class="text-2xl font-medium">02:50</div>
+                            <div class="text-2xl font-medium">{{floor(($nextlevel->wait_time*60 - $ticket_time)/60)}}:{{fmod(($nextlevel->wait_time*60 - $ticket_time),60)}}</div>
                                 <div class="text-slate-500 mt-0.5">Remained</div>
                             </div>
                         </div>
@@ -60,24 +62,25 @@ There are 4 Stages, 20 Levels & 20 Courses to Activate & Unlock.
                     </span>
                 </div>
             </div>
+            @elseif ($loggedin_user->state === 'receive')
             <div class="col-span-12 lg:col-span-12 mt-8 ">
                 <div  class="text-center mb-5">
                     <span class=" text-lg" style="margin-left:0rem">
-                    Dear “Username”, you have been requested by “Paying Username” for Activation below
+                    Dear <i>{{$loggedin_user->name}}</i>, you have been requested by “Paying Username” for Activation below
 is the Contact Details.
                     </span>
                 </div>
                 <div class="box bg-primary p-5 items-center mx-auto" style="width: 400px ;">
                     <div class="flex txt-white">
                         <div class="mx-auto my-auto items-center">
-                            <div class="text-md mb-3">Payeer : username</div>
-                            <div class="text-md mb-3">Bank : details</div>
-                            <div class="text-md">Phone : unmber</div>
+                            <div class="text-md mb-3">Receiver : {{$another->name}}</div>
+                            <div class="text-md mb-3">Bank : {{$another->bank}}</div>
+                            <div class="text-md">phone : {{$another->phone}}</div>
                         </div>
                         <div class="relative mx-auto">
                             <canvas id="donut-chart-widget2" height="120" width="120"></canvas>
                             <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
-                                <div class="text-2xl font-medium">02:50</div>
+                                <div class="text-2xl font-medium">{{floor(($nextlevel->wait_time*60 - $ticket_time)/60)}}:{{fmod(($nextlevel->wait_time*60 - $ticket_time)/60)}}</div>
                                 <div class="text-slate-500 mt-0.5">Remained</div>
                             </div>
                         </div>
@@ -95,6 +98,11 @@ is the Contact Details.
                     </span>
                 </div>
             </div>
+            @endif
+            
+
+            
+            
             <div id="delete-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -109,8 +117,9 @@ is the Contact Details.
                                 </div>
                             </div>
                             <div class="px-5 pb-8 text-center">
-                                <button type="button" data-tw-dismiss="modal" class="btn btn-success w-24 mr-1">YES</button>
-                                <button type="button" class="btn btn-danger w-24">NO</button>
+                                <a href="{{route('dashboard.torequest')}}" type="button" class="btn btn-success w-24">YES</a>
+                                <button type="button" data-tw-dismiss="modal" class="btn btn-danger w-24 mr-1">NO</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -130,11 +139,11 @@ is the Contact Details.
                         <div class="box bg-primary p-5">
                             <div class="flex items-center">
                                 <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
-                                <span class="text-md">Total Earning : NGN 135,000</span>
+                                <span class="text-md">Total Earning : NGN 0</span>
                             </div>
                             <div class="flex items-center mt-3">
                                 <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
-                                <div class="text-md text-justify ">Total Unlocked Course : 5</div>
+                                <div class="text-md text-justify ">Total Unlocked Course : 0</div>
                             </div>    
                         </div>
                     </div>
@@ -142,11 +151,11 @@ is the Contact Details.
                         <div class="box bg-primary p-5">
                             <div class="flex items-center">
                                 <div class="w-2 h-2 bg-danger rounded-full mr-3"></div>
-                                <span class="text-md">Total Completed Stage : 1</span>
+                                <span class="text-md">Total Completed Stage : 0</span>
                             </div>
                             <div class="flex items-center mt-3">
                                 <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
-                                <div class="text-md text-justify ">Total Completed Level : 5</div>
+                                <div class="text-md text-justify ">Total Completed Level : 0</div>
                             </div>    
                         </div>
                     </div>
@@ -168,42 +177,20 @@ is the Contact Details.
                         <thead>
                             <tr>
                                 <th class="whitespace-nowrap">Actions</th>
-                                <th class="text-center whitespace-nowrap">Date</th>
+                                <th class="text-center whitespace-nowrap">Date & Time</th>
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($histories as $history)
                             <tr class="intro-x">
                                 <td>
-                                    <div class=" text-xs whitespace-nowrap mt-0.5">User Updated profile</div>
+                                    <div class=" text-xs whitespace-nowrap mt-0.5">{{$history->data}}</div>
                                 </td>
                                 <td class="table-report__action w-56">
-                                    <div class=" mt-1">2022-02-11 07:37:00</div>
+                                    <div class=" mt-1">{{$history->created_at}}</div>
                                 </td>
                             </tr>
-                            <tr class="intro-x">
-                                <td>
-                                    <div class=" text-xs whitespace-nowrap mt-0.5">User Updated profile</div>
-                                </td>
-                                <td class="table-report__action w-56">
-                                    <div class=" mt-1">2022-02-11 07:37:00</div>
-                                </td>
-                            </tr>
-                            <tr class="intro-x">
-                                <td>
-                                    <div class=" text-xs whitespace-nowrap mt-0.5">User Updated profile</div>
-                                </td>
-                                <td class="table-report__action w-56">
-                                    <div class=" mt-1">2022-02-11 07:37:00</div>
-                                </td>
-                            </tr>
-                            <tr class="intro-x">
-                                <td>
-                                    <div class=" text-xs whitespace-nowrap mt-0.5">User Updated profile</div>
-                                </td>
-                                <td class="table-report__action w-56">
-                                    <div class=" mt-1">2022-02-11 07:37:00</div>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -241,7 +228,26 @@ is the Contact Details.
         
 @endsection
 @section('script')
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
 <script>
+    Pusher.logToConsole = true;
+
+var pusher = new Pusher('4f7afe0ea1e454495543', {
+    cluster: 'ap1',
+  //encrypted: true
+});
+
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('status-liked');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('this-event', function(data) {
+    console.log(data);
+    console.log(data.username);
+  console.log(2);
+});
+
 const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 function addZero(i) {
@@ -267,7 +273,7 @@ function showTime() {
     datasets: [
       {
         //label: "My First Dataset",
-        data: [60, 40],
+        data: [{{($loggedin_user->state == 'ready')?0:$ticket_time}}, {{($loggedin_user->state == 'ready')?0:($nextlevel->wait_time*60 - $ticket_time)}}],
         backgroundColor: [
           "rgb(164, 101, 241)",
           "rgb(101, 143, 241)",

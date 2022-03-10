@@ -5,7 +5,7 @@
 @endsection
 @section('subtitle')
 <h2 class="text-lg font-medium truncate mr-5">
-Help
+Courses
 </h2>
 @endsection
 @section('substyle')
@@ -28,32 +28,32 @@ Help
         <table class="table table-report sm:mt-2">
             <thead>
                 <tr>
-                    <th class="whitespace-nowrap">IMAGES</th>
+                    <th class="whitespace-nowrap">Preview</th>
                     <th class="whitespace-nowrap">PRODUCT NAME</th>
-                    <th class="text-center whitespace-nowrap">STOCK</th>
+                    <th class="text-center whitespace-nowrap">Level</th>
                 </tr>
             </thead>
             <tbody>
+            @foreach($allcourses as $course)
                 <tr class="intro-x">
                     <td class="w-30">
                         <div class="flex">
                             <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Icewall Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-12.jpg" title="Uploaded at 10 July 2020">
+                                <img  class="tooltip rounded-full" src="{{$course->portfolio}}" onerror="this.src='dist/images/placeholders/200x200.jpg'">
                             </div>
-                            
                         </div>
                     </td>
                     <td>
-                        <a href="" class="font-medium whitespace-nowrap">Samsung Q90 QLED TV</a> 
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Electronic</div>
+                        <a href="{{ route('viewcourses.page',$course->id) }}" class="font-medium whitespace-nowrap">{{$course->name}}</a> 
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{$course->posted_at}}</div>
                     </td>
-                    <td class="text-center">93</td>
+                    <td class="text-center">{{$course->level->name}}</td>
                 </tr>
-                
+            @endforeach
             </tbody>
         </table>
     </div>
-    <div class="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+    <!-- <div class="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
         <nav class="w-full sm:w-auto sm:mr-auto">
             <ul class="pagination">
                 <li class="page-item">
@@ -81,7 +81,7 @@ Help
             <option>35</option>
             <option>50</option>
         </select>
-    </div>
+    </div> -->
 </div>
 <!-- END: Weekly Top Products -->
 <!-- BEGIN: Weekly Top Products -->
@@ -95,32 +95,32 @@ Help
         <table class="table table-report sm:mt-2">
             <thead>
                 <tr>
-                    <th class="whitespace-nowrap">IMAGES</th>
+                    <th class="whitespace-nowrap">Preview</th>
                     <th class="whitespace-nowrap">PRODUCT NAME</th>
-                    <th class="text-center whitespace-nowrap">STOCK</th>
+                    <th class="text-center whitespace-nowrap">Level</th>
                 </tr>
             </thead>
             <tbody>
+            @foreach($unlockedcourses as $course)
                 <tr class="intro-x">
                     <td class="w-30">
                         <div class="flex">
                             <div class="w-10 h-10 image-fit zoom-in">
-                                <img alt="Icewall Tailwind HTML Admin Template" class="tooltip rounded-full" src="dist/images/preview-12.jpg" title="Uploaded at 10 July 2020">
+                                <img  class="tooltip rounded-full" src="{{$course->portfolio}}" onerror="this.src='dist/images/placeholders/200x200.jpg'">
                             </div>
-                            
                         </div>
                     </td>
                     <td>
-                        <a href="" class="font-medium whitespace-nowrap">Samsung Q90 QLED TV</a> 
-                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Electronic</div>
+                        <a href="{{ route('viewcourses.page',$course->id) }}" class="font-medium whitespace-nowrap">{{$course->name}}</a>
+                        <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{$course->posted_at}}</div>
                     </td>
-                    <td class="text-center">93</td>
+                    <td class="text-center">{{$course->level->name}}</td>
                 </tr>
-                
+            @endforeach
             </tbody>
         </table>
     </div>
-    <div class="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
+    <!-- <div class="intro-y flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-3">
         <nav class="w-full sm:w-auto sm:mr-auto">
             <ul class="pagination">
                 <li class="page-item">
@@ -148,7 +148,7 @@ Help
             <option>35</option>
             <option>50</option>
         </select>
-    </div>
+    </div> -->
 </div>
 <!-- END: Weekly Top Products -->
 </div>

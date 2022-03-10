@@ -10,10 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Realtimenotice implements ShouldBroadcast
+class RecordHistory
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $username;
+    public $user;
 
 	public $message;
     /**
@@ -21,10 +21,10 @@ class Realtimenotice implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($username)
+    public function __construct($data,$user=0)
     {
-        $this->username = $username;
-		$this->message  = "{$username} liked your status";
+        $this->user = $user;
+		$this->message  = $data;
     }
 
     /**
@@ -34,13 +34,6 @@ class Realtimenotice implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        error_log("\n222 \n", 3, "c:/my-errors.log");
-
-        //return new PrivateChannel('channel-name');
-        return ['status-liked'];
-    }
-    public function broadcastAs()
-    {
-        return 'this-event';
+        return new PrivateChannel('channel-name');
     }
 }

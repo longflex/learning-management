@@ -111,7 +111,7 @@
                                                         <div class="box p-10 text-center shadow-lg bg-primary">
                                                                 <span class="text-base font-medium truncate txt-white">Current Stage</span>
                                                                 <div class="font-medium  mt-5  text-center">
-                                                                    <a href="{{route('sendoffer')}}" type="button" class="btn  btn-outline-success py-1 px-2">Stage Name</a>
+                                                                    <a href="{{route('sendoffer')}}" type="button" class="btn  btn-outline-success py-1 px-2">{{$loggedin_user->level->stage->name}}</a>
                                                                 </div>
                                                         </div>
                                                     </div>
@@ -119,7 +119,7 @@
                                                         <div class="box p-10 text-center bg-primary shadow-lg ">
                                                                 <span class="text-base font-medium truncate txt-white">Current Level</span>
                                                                 <div class="font-medium  mt-5 text-center">
-                                                                    <button type="button" class="btn btn-outline-success py-1 px-2">Stage Level</button>
+                                                                    <button type="button" class="btn btn-outline-success py-1 px-2">{{$loggedin_user->level->name}}</button>
                                                                 </div>
                                                         </div>
                                                     </div>
@@ -130,8 +130,8 @@
                                 <div class="col-span-12 lg:col-span-12 mt-8">
                                 <i data-feather="award" style="color:green;" class="block text-primary w-5 h-5 "></i>
 
-                                    <div class="ml-3 mb-10">Welcome Username to sitename
-                                        <br>Good afternoon, you already success, keep on acticating money...
+                                    <div class="ml-3 mb-10">Welcome <span style="color:green;" >{{$loggedin_user->name}}</span> to <i>{{env('APP_NAME')}}</i>
+                                        <br>Good afternoon, you already success, keep on activating money...
                                     </div>
                                 </div>
                             </div>

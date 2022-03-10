@@ -6,6 +6,7 @@ use Notification;
 use App\Notifications\OffersNotification;
 class NotificationController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -16,15 +17,12 @@ class NotificationController extends Controller
         return view('product');
     }
     
-    public function sendOfferNotification() {
-        $userSchema = User::find(11);
+    public function sendOfferNotification($id, $type) {
+        $userSchema = User::find($id);
   
+
         $offerData = [
-            'name' => 'BOGO',
             'body' => 'You received an offer.',
-            'thanks' => 'Thank you',
-            'offerText' => 'Check out the offer',
-            'offerUrl' => url('/'),
             'offer_id' => 007
         ];
   

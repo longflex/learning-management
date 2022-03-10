@@ -1,7 +1,7 @@
 @extends('../layout/' . $layout)
 
 @section('subhead')
-    <title>Add New Post - Icewall - Tailwind HTML Admin Template</title>
+    <title>Add New Offer - Icewall - Tailwind HTML Admin Template</title>
 @endsection
 
 @section('subcontent')
@@ -13,18 +13,13 @@
         {!! Session::get('success') !!}
     </div>
 @endif
-@if(Session::has('id'))
-    <div class="font-medium p-5" style="color: orange;">
-        {!! Session::get('id') !!}
-    </div>
-@endif
-<form method="POST" enctype="multipart/form-data" action="{{ route('editcourses.store') }}">
+
+<form method="POST" enctype="multipart/form-data" action="{{ route('addoffers.store') }}">
             @csrf   
-            <input name="id" type="hidden" value="{{ $course->id }}" >
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Edit Course</h2>
+        <h2 class="text-lg font-medium mr-auto">Add New Offer</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <a href="{{route('courses.list')}}" class="btn btn-pending shadow-md w-48 flex items-center" aria-expanded="false" >
+            <a href="{{route('offer')}}" class="btn btn-pending shadow-md w-48 flex items-center" aria-expanded="false" >
                 Cancel
             </a>
             <button type="submit" class="btn btn-primary shadow-md w-48 flex items-center" aria-expanded="false" >
@@ -34,76 +29,62 @@
     </div>
     
     <div class="pos intro-y grid grid-cols-12 gap-5 mt-5">
-        <!-- BEGIN: Post Content -->
-        <div class="intro-y col-span-12 lg:col-span-8">
-            <input name="name" type="text" class="intro-y form-control py-3 px-4 box pr-10" value="{{ $course->name }}" placeholder="Title">
-            <div class="post intro-y overflow-hidden box mt-5">
-                
-                <div class="post__content tab-content">
-                    <div id="contentval" class="tab-pane p-5 active" role="tabpanel" aria-labelledby="content-tab">
-                        <textarea name="contentval" id="editor" placeholder="Write content" value="">
-                        {{ $course->contentval }}
-                        </textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END: Post Content -->
         <!-- BEGIN: Post Info -->
-        <div class="col-span-12 lg:col-span-4">
+        <div class="col-span-12 lg:col-span-6">
             <div class="intro-y box p-5">
+                <div class="mt-3">
+                    <label for="name" class="form-label">Title</label>
+                    <input name="name" type="text" class="form-control" id="name" data-single-mode="true"  value="{{ old('name') }}" placeholder="Title">
+                </div>
                 <div>
                     <label class="form-label">Written By</label>
-                        <div class="btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
-                            <div class="w-6 h-6 image-fit mr-3">
-                                <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
-                            </div>
-                            <div class="truncate">{{ $loggedin_user->name }}</div>
+                    <div class="btn w-full btn-outline-secondary dark:bg-darkmode-800 dark:border-darkmode-800 flex items-center justify-start">
+                        <div class="w-6 h-6 image-fit mr-3">
+                            <img class="rounded" alt="Icewall Tailwind HTML Admin Template" src="{{ asset('storage/images/' . $loggedin_user->photo) }}">
                         </div>
+                        <div class="truncate">{{ $loggedin_user->name }}</div>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <label for="level" class="form-label">Level</label>
                     <select name="level_id" data-placeholder="Select categories" class="w-full" id="level">
                         @foreach ($levels as $level)
                             <option value="{{$level->id}}" 
-                            {{ ($course->level_id == $level->id) ? 'selected':'' }}
+                            {{ (old('level_id') == $level->id) ? 'selected':'' }}
                             >{{$level->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mt-3">
                     <label for="posted_at" class="form-label">Post Date</label>
-                    <input name="posted_at" type="text" class="datepicker form-control" id="posted_at" value="{{ $course->posted_at }}" data-single-mode="true">
+                    <input name="posted_at" type="text" class="datepicker form-control" id="posted_at" value="{{ old('posted_at') }}" data-single-mode="true">
                 </div>
                 <div class="mt-3">
                     <label for="category" class="form-label">Categories</label>
-                    <select name="categories[]" data-placeholder="Select categories" class="tom-select w-full" id="category" multiple>
-                        <option value=""></option>
+                    <select name="categories[]" data-placeholder="Select categories" class="tom-select w-full" id="category" multiple data-value = "{{ collect(old('categories')) }}">
                         @foreach ($categories as $category)
                             <option value="{{$category->id}}" 
-                            
-                            @if(isset($course))
-                                @if( in_array($category->id, $selectedCategories))
-                                    {{ "selected" }}
-                                @endif
-                            @endif
-                            
+                            {{ (collect(old('categories'))->contains($category->id)) ? 'selected':'' }}
                             >{{$category->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mt-3">
                     <label for="brief_title" class="form-label">Brief text</label>
-                    <textarea name="brief_title" id="brief_title" class="w-full">{{ $course->brief_title }}</textarea>
+                    <textarea name="brief_title" id="brief_title" class="w-full">{{ old('brief_title') }}</textarea>
                     
                 </div>
                 <div class="mt-3">
                     <label for="portfolio" class="form-label">Portfolio Link</label>
-                    <input name="portfolio" type="text" class="form-control" id="portfolio" data-single-mode="true"  value="{{ $course->portfolio }}">
+                    <input name="portfolio" type="text" class="form-control" id="portfolio" data-single-mode="true"  value="{{ old('portfolio') }}">
+                </div>
+                <div class="mt-3">
+                    <label for="mainlink" class="form-label">Data Link</label>
+                    <input name="mainlink" type="text" class="form-control" id="mainlink" data-single-mode="true"  value="{{ old('mainlink') }}">
                 </div>
                 <div class="form-check form-switch flex flex-col items-start mt-3">
                     <label for="setactive" class="form-check-label ml-0 mb-2">Set Active</label>
-                    <input value="1" name="setactive" id="setactive" class="form-check-input" {{ ($course->setactive === '1')?'checked':'' }} type="checkbox" >
+                    <input value="1" name="setactive" id="setactive" {{ (old('setactive') === '1')?'checked':'' }} class="form-check-input" type="checkbox">
                 </div>
             </div>
         </div>
@@ -136,26 +117,6 @@
         .catch( error => {
             console.log( error );
         } );
-
-// alert(1);
-//         $(document).ready(function (e) {
-//          alert(2);
-//         $('#photo_store').change(function(e){
-//             path = $('#photo_store').val();
-//             alert(path);
-//             $('#image-preview').attr('src', path);
-// //             let reader = new FileReader();
-
-// //             reader.onload = (e) => { 
-// // alert(4);
-// //                 $('#image-preview').attr('src', e.target.result); 
-// //             }
-
-//             //reader.readAsDataURL(this.files[0]); 
-        
-//         });
-        
-//         });
 
 
     $(function()

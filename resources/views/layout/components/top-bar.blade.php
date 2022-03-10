@@ -10,12 +10,12 @@
         </a>
         <!-- END: Logo -->
         
-        <!-- BEGIN: Notifications -->
+        <!-- BEGIN: Notifications notification--bullet-->
         <div class="intro-x dropdown ml-auto mr-4 sm:mr-6">
-            <div class="dropdown-toggle notification notification--bullet cursor-pointer" role="button" aria-expanded="false" data-tw-toggle="dropdown">
+            <div class="dropdown-toggle notification  cursor-pointer" role="button" aria-expanded="false" data-tw-toggle="dropdown">
                 <i data-feather="bell" class="notification__icon dark:text-slate-500"></i>
             </div>
-            <div class="notification-content pt-2 dropdown-menu">
+            <!-- <div class="notification-content pt-2 dropdown-menu">
                 <div class="notification-content__box dropdown-content">
                     <div class="notification-content__title">Notifications</div>
                     @foreach (array_slice($fakers, 0, 5) as $key => $faker)
@@ -34,7 +34,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- END: Notifications -->
         <!-- BEGIN: Account Menu -->
@@ -67,7 +67,7 @@
                     <li><hr class="dropdown-divider border-white/[0.08]"></li>
                     <li>
                         <a href="{{ route('addcourses.page') }}" class="dropdown-item hover:bg-white/5">
-                            <i data-feather="lock" class="w-4 h-4 mr-2"></i> Add Courses
+                            <i data-feather="lock" class="w-4 h-4 mr-2"></i> Admin
                         </a>
                     </li>
                     <li>

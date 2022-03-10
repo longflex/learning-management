@@ -18,6 +18,14 @@ use App\Http\Controllers\NotificationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('noticetest', function () {
+	event(new App\Events\Realtimenotice('Someone'));
+	return "Event has been sent!";
+});
+Route::get('htest', function () {
+	event(new App\Events\RecordHistory());
+	return "a Event has been sent!";
+});
 Route::get('/send-notification', [NotificationController::class, 'sendOfferNotification'])->name('sendoffer');
 Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
 Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class, 'switch'])->name('color-scheme-switcher');
@@ -30,11 +38,12 @@ Route::middleware('loggedin')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
+    Route::get('dashboard/torequest', [PageController::class, 'dashboard_torequest'])->name('dashboard.torequest');
     Route::get('levels/page', [PageController::class, 'levels_page'])->name('levels.page');
     Route::post('addlevels-page', [PageController::class, 'addlevels_page'])->name('addlevels.page');
     Route::get('stages-page', [PageController::class, 'stages_page'])->name('stages.page');
     Route::post('addstages-store', [PageController::class, 'addstages_store'])->name('addstages.store');
-Route::get('addshares-page', [PageController::class, 'addshares_page'])->name('addshares.page');
+    Route::get('addshares-page', [PageController::class, 'addshares_page'])->name('addshares.page');
     Route::post('addshares-store', [PageController::class, 'addshares_store'])->name('addshares.store');
     Route::get('update-profile-page', [PageController::class, 'updateProfile'])->name('update-profile');
     Route::post('updateProfile/store/displayinfo', [PageController::class, 'updateProfile_store_displayinfo'])->name('update-profile.store.displayinfo');
@@ -45,6 +54,10 @@ Route::get('addshares-page', [PageController::class, 'addshares_page'])->name('a
     Route::get('help', [PageController::class, 'help'])->name('help');
     Route::get('share', [PageController::class, 'share'])->name('share');
     Route::get('offer', [PageController::class, 'offer'])->name('offer');
+    Route::get('addoffers/page', [PageController::class, 'addoffers_page'])->name('addoffers.page');
+    Route::get('editoffers/page/{id}', [PageController::class, 'editoffers_page'])->name('editoffers.page');
+    Route::post('addoffers/store', [PageController::class, 'addoffers_store'])->name('addoffers.store');
+    Route::get('offers-del/{id}', [PageController::class, 'offers_del'])->name('offers.del');
     Route::get('chat-page', [PageController::class, 'chat'])->name('chat');
     Route::get('history', [PageController::class, 'history'])->name('history');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -52,11 +65,13 @@ Route::get('addshares-page', [PageController::class, 'addshares_page'])->name('a
     Route::post('/change/password/store', [PageController::class, 'changePasswordStore'])->name('change-password.store');
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('activate', [PageController::class, 'activate'])->name('activate-me');
+    Route::get('viewcourses-page/{id}', [PageController::class, 'viewcourses_page'])->name('viewcourses.page');
     Route::get('addcourses/page', [PageController::class, 'addcourses_page'])->name('addcourses.page');
     Route::get('editcourses/page/{id}', [PageController::class, 'editcourses_page'])->name('editcourses.page');
     Route::post('addcourses/store', [PageController::class, 'addcourses_store'])->name('addcourses.store');
+    Route::post('editcourses/store', [PageController::class, 'editcourses_store'])->name('editcourses.store');
     Route::get('courses-list', [PageController::class, 'courses_list'])->name('courses.list');
-
+    Route::get('courses-del/{id}', [PageController::class, 'courses_del'])->name('courses.del');
     //Route::get('activate', [PageController::class, 'activate'])->name('activate-another');
 
     

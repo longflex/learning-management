@@ -9,8 +9,11 @@ use App\Models\Category;
 use App\Models\CoursesCategories;
 use App\Models\Share;
 use App\Models\SharesCategories;
+use App\Models\Offer;
+use App\Models\OffersCategories;
 use App\Models\Stage;
 use App\Models\Level;
+use App\Models\Ticket;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -19,6 +22,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Carbon;
+// use Carbon\Carbon;
 class PageController extends Controller
 {
     /**
@@ -678,13 +683,66 @@ class PageController extends Controller
     }
     public function dashboard()
     {
-        return view('pages-pro/dashboard', [
-            // Specify the base layout.
-            // Eg: 'side-menu', 'simple-menu', 'top-menu', 'login'
-            // The default value is 'side-menu'
+        error_log("\n".date("Y-m-d H:i:s.").gettimeofday()['usec']."\n".round(microtime(true) * 1000)."\n ".time()."--- \n".strtotime('09:00:59'), 3, "c:/my-errors.log");
+        $courses = Course::all();
+        $course_num = $courses->count();
+        $levels = Level::all();
+        $level_num = $levels->count() - 1;
+        $stages = Stage::all();
+        $stage_num = $stages->count();
+        $me = Auth::user();
+        $unlocked_levels = $me->level->id - 1;
+        $locked_levels = $level_num - $unlocked_levels;
+        $unlocked_stages = $me->level->stage->id - 1;
+        $locked_stages = $stage_num - $unlocked_stages;
+        $ticket_time=0;
+        $another=0;
+        $nextlevel=0;
+        if($me->state != "ready"){
 
-            //'layout' => 'top-menu',
+            $startTime = strtotime($me->ticket->created_at);
+            $curtime = time();
+            $ticket_time = round(($curtime - $startTime)/60);
+            $nextlevel = $me->ticket->level;
+
+            if($me->state == "request"){
+                $another = $me->ticket->receiver_user;
+            }else if($me->state == "receive"){
+                $another = $me->ticket->request_user;
+            }
+        }
+        $histories = $me->history;
+        //error_log("\n<<".$ticket_time."\n", 3, "c:/my-errors.log");
+
+        return view('pages-pro/dashboard', compact('level_num','stage_num','unlocked_levels','locked_levels','unlocked_stages','locked_stages','ticket_time','another','nextlevel','histories'));
+    }
+    public function dashboard_torequest()
+    {
+
+        $id = Auth::user()->id;
+        $user = User::findOrFail($id);
+
+        $next_level_id = $user->level->id + 1;
+        $next_level = Level::findOrFail($next_level_id);
+
+        $next_fee = $next_level->fee;
+        $next_name = $next_level->name;
+
+        $verifier = User::where('level_id', $next_level_id)
+            ->where('state', 'ready')->first();
+        $new_model = Ticket::create([
+            'request'=>$id,
+            'receiver'=>$verifier->id,
+            'level_id'=>$next_level_id
         ]);
+        $verifier->ticket_id = $new_model->id;
+        $verifier->state = 'receive';
+        $verifier->save();
+        $user->ticket_id = $new_model->id;
+        $user->state = 'request';
+        $user->save();
+
+        return redirect()->back()->with('status', 'successfully updated');
     }
     /**
      * Show specified view.
@@ -785,8 +843,10 @@ class PageController extends Controller
     }
     public function offer()
     {
+        $offers = Offer::all();
 
-        return view('pages-pro/offer');
+        return view('pages-pro/offer', compact('offers'))->with(['layout'=>'side-menu']);
+        
     }
     public function chat()
     {
@@ -795,8 +855,9 @@ class PageController extends Controller
     }
     public function history()
     {
-
-        return view('pages-pro/transaction');
+        $me = Auth::user();
+        $histories = $me->history;
+        return view('pages-pro/transaction', compact('histories'));
     }
         /**
      * Show specified view.
@@ -806,15 +867,47 @@ class PageController extends Controller
      */
     public function notification()
     {
-        return view('pages-pro/notification');
+        $me = Auth::user();
+        $histories = $me->history;
+        return view('pages-pro/transaction', compact('histories'));
     }
     public function groups()
     {
         return view('pages-pro/groups');
     }
-    public function courses()
+    public function addoffers_page()
     {
-        return view('pages-pro/course');
+        $categories = Category::all();
+        $levels = Level::all();
+        return view('pages-pro/addoffers', compact('categories','levels'))->with(['layout'=>'side-menu']);
+    }
+    public function addoffers_store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'categories' => 'required',
+            'brief_title' => 'required|max:200',
+            'portfolio' => 'required|max:300|url',
+            'mainlink' => 'required|max:300|url',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput($request->all);
+        }
+
+        $offer = Offer::create($request->all());
+
+        $categories = $request->categories;
+        foreach ($categories as $category){
+            $newOffersCategories = new OffersCategories();
+            $newOffersCategories->offer_id = $offer->id;
+            $newOffersCategories->category_id = $category;
+            $offer->categories()->save($newOffersCategories);
+        }
+
+        return redirect()->back()->withInput()->with(['success'=>"An offer successfully added!"]);
     }
     public function addcourses_page()
     {
@@ -858,14 +951,61 @@ class PageController extends Controller
         $course = Course::findOrFail($id);
         $mode = 'edit';
         $categories = Category::all();
-
+        $levels = Level::all();
         $selectedCategories = [];
         
         foreach($course->categories as $category){
             $selectedCategories []= $category->category_id;
         }
 
-        return view('pages-pro/editcourses',compact('categories','mode', 'course', 'selectedCategories'))->with(['layout'=>'admin-menu']);
+        return view('pages-pro/editcourses',compact('categories','mode', 'course', 'selectedCategories','levels'))->with(['layout'=>'admin-menu']);
+    }
+    public function editcourses_store(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:100',
+            'contentval' => 'required|max:10000',
+            'categories' => 'required',
+            'brief_title' => 'required|max:200',
+            'portfolio' => 'required|max:300|url',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput($request->all);
+        }
+        $id = $request->id;
+        $course = Course::find($id);
+
+        $course->fill($request->all())->save();
+
+        $categories = $request->categories;
+        foreach ($categories as $category){
+            $newCoursesCategories = new CoursesCategories();
+            $newCoursesCategories->course_id = $id;
+            $newCoursesCategories->category_id = $category;
+            $course->categories()->save($newCoursesCategories);
+        }
+
+        return redirect()->back()->withInput()->with(['success'=>"A course successfully added!",'id'=>$course->id]);
+        
+        
+    }
+    public function viewcourses_page($id)
+    {
+        $course = Course::findOrFail($id);
+        $mode = 'view';
+        $categories = Category::all();
+        $levels = Level::all();
+        $selectedCategories = [];
+        
+        foreach($course->categories as $category){
+            $selectedCategories []= $category->category_id;
+        }
+
+        return view('pages-pro/viewcourses',compact('categories','mode', 'course', 'selectedCategories','levels'))->with(['layout'=>'admin-menu']);
     }
     public function courses_list()
     {
@@ -878,6 +1018,20 @@ class PageController extends Controller
         });
         return view('pages-pro/courses_list', ['layout'=>'admin-menu','courses'=>$courses]);
 
+    }
+    public function courses_del($id)
+    {
+        $course = Course::find($id);
+        $course->delete();
+        return redirect()->back()->with(['success'=>"A course successfully added!"]);
+    }
+    public function courses()
+    {
+        $me = Auth::user();
+        $allcourses = Course::all();
+        $unlockedcourses = Course::where('level_id','<=',$me->level_id)->get();
+        
+        return view('pages-pro/course',compact('allcourses','unlockedcourses'))->with(['layout'=>'side-menu']);
     }
     public function levels_page()
     {

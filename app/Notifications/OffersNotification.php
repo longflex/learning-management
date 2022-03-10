@@ -54,18 +54,13 @@ class OffersNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            'offer_id' => $this->offerData['offer_id'],
-            'offerText' => $this->offerData['offerText'],
-            'thanks' => $this->offerData['thanks'],
-            'data' => $this->offerData['body'],
-        ];
+        return $this->offerData;
     }
     public function toBroadcast($notifiable)
     {
         return (new BroadcastMessage([
-            'offer_id' => $this->offerData['offer_id'],
-            'data' => $this->offerData['body'],
+            'offer_id' => $this->offerData,
+            'data' => $this->offerData,
         ]))
         ->onConnection('sync')
         ->onQueue('broadcasts');
